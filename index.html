@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Desafio APIs</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon.ico" />
+    <link href="./assets/css/styles.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="layout">
+            <div class="title">Conversor de monedas Nacional</div>
+            <div class="card">
+                <div class="pesos">Pesos CLP</div>
+                <div class="inputx">
+
+                    <input type="number" id="monedaIN">
+                </div>
+                <div class="moneda">Moneda a convertir:</div>
+                <div class="select"><select id="monedaTO">
+                        <option value="-1">Seleccione moneda</option>
+                    </select></div>
+                <div class="buscar"><button id="convertir">BUSCAR</button></div>
+                <div id="resultado">...</div>
+            </div>
+            <div class="grafico"></div>
+        </div>
+
+        <div class="attribution">
+            Coded by <a href="https://fisaavedrae.github.io/">FSE</a>
+        </div>
+    </div>
+    <div class="climas" id="climas"></div>
+    <script src="./assets/js/main.js"></script>
+</body>
+
+</html>
