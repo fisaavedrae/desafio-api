@@ -1,6 +1,8 @@
 # Intro
 
-En este desafío validaremos nuestros conocimientos sobre la manipulación del DOM y las instrucciones if else if y else y operadores lógicos., se utilizó Flex para el layout y la disposición de elementos y Media Query para hacer el sitio responsivo. Desarrolló con Mobile First
+En esta prueba validaremos nuestros conocimientos del método fetch. 
+
+Aplicando los conceptos y herramientas aprendidas hasta ahora, en esta prueba deberás programar un conversor de monedas a partir de un monto en pesos chilenos. Para esto será necesario consultar la api mindicador.cl usando el método fetch.
 
 # Responsive Breakpoint
 
@@ -13,7 +15,7 @@ Para desarrollar estoy usando un macbook air con una resolución de 1440x900, si
 
 
 
-[link repo](https://github.com/fisaavedrae/desafio-condiciones)
+[link repo](https://github.com/fisaavedrae/api)
 
-[link live app](https://desafio-condiciones.vercel.app/)
+[link live app](https://desafio-api-verge.vercel.app/)
 

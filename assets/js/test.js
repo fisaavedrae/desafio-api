@@ -1,10 +1,5 @@
-async function leer() {
-    const res = await fetch('https://mindicador.cl/api');
-    const monedaJSON = await res.json();
-    console.log(monedaJSON);
-    monedaJSON.forEach(element => {
-        console.log(element);
+import dataJson from './mindicador.json' assert { type: "json" };
+console.log(dataJson.uf.valor);
+//document.getElementById('main').innerHTML = JSON.stringify(dataJson);
 
-    });
-
-}
+// console.log(dataJson);

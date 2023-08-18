@@ -1,3 +1,5 @@
+import dataJson from './mindicador.json' assert { type: "json" }; // Importo el archivo jason local
+
 //Deje este arreglo para poder parametrizar la cantidad de monedas a mostrar en el select, el tipo de monedas a ingresar deben coincidir con la pagina mindicador.cl
 let tipoMonedas = [
     {
@@ -16,19 +18,32 @@ let tipoMonedas = [
 
 async function getMonedas() {
     //Obtengo todas las monedas segun arreglo y lleno el select
-    fetch('https://mindicador.cl/api').then(function (response) {
-        return response.json();
-    }).then(function (dailyIndicators) {
+    try {
+        const res = await fetch('https://mindicador.cl/apix');
+        const monedaJSON = await res.json();
         let select = document.getElementById("monedaTO");
         tipoMonedas.forEach((element) => {
             let option = document.createElement("option");
-            option.value = dailyIndicators[element.tipo].valor;
+            option.value = monedaJSON[element.tipo].valor;
             option.text = element.descripcion;
             select.appendChild(option);
-        })
-    }).catch(function (error) {
-        console.log('Requestfailed', error);
-    });
+        });
+    } catch (error) {
+        console.log('Error fetch: ' + error.message);
+        // arrojó error la lectura de la api, asi que uso el archivo local importado al inicio del archivo
+        try {
+            let select = document.getElementById("monedaTO");
+            tipoMonedas.forEach((element) => {
+                let option = document.createElement("option");
+                option.value = dataJson[element.tipo].valor;
+                option.text = element.descripcion;
+                select.appendChild(option);
+            });
+        } catch (error) {
+            console.log('Error local: ' + error.message);
+        }
+    }
+
 }
 function convertirMoneda() {
     let moneda = document.getElementById("monedaIN").value;
@@ -41,8 +56,8 @@ function convertirMoneda() {
         alert("Seleccione una moneda");
         return;
     }
-    let resultado = Number(moneda) * Number(monedaDestino);
-    document.getElementById("resultado").innerHTML = "Resultado: $" + resultado;
+    let resultado = Number(moneda) / Number(monedaDestino);
+    document.getElementById("resultado").innerHTML = "Resultado: $" + Number(resultado).toFixed(2);
     getMonedaMes(); //Llamo a la funcion para obtener los valores de los 10 ultimos dias
 }
 
@@ -51,7 +66,7 @@ async function getMonedaMes() {
     let labels = [];
     let valores = [];
     let contador = 0;
-    descMoneda = monedaDestino.options[monedaDestino.selectedIndex].text;
+    let descMoneda = monedaDestino.options[monedaDestino.selectedIndex].text;
     const url = "https://mindicador.cl/api/" + descMoneda.toLowerCase();
     const res = await fetch(url);
     const monedaJSON = await res.json();
@@ -64,7 +79,6 @@ async function getMonedaMes() {
             valores.push(element.valor); //Cargo arreglo de valores para ser usado en el grafico
         }
     });
-
 
     cargarChart(labels, valores, descMoneda); //Llamo a la funcion para cargar el grafico
 }
@@ -94,7 +108,6 @@ function cargarChart(labels, valores, descMoneda) {
                 y: {
                     beginAtZero: false
                 }
-
             },
             plugins: {
                 legend: {
