@@ -113,5 +113,6 @@ body {
 
 .attribution {
     padding-top: 30px;
+    padding-bottom: 30px;
     color: hsl(184, 14%, 56%);
 }

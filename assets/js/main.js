@@ -1,5 +1,5 @@
 import dataJson from './mindicador.json' assert { type: "json" }; // Importo el archivo jason local
-let monedaJSON = "";
+let monedaJSON = [];
 //Deje este arreglo para poder parametrizar la cantidad de monedas a mostrar en el select, el tipo de monedas a ingresar deben coincidir con la pagina mindicador.cl
 let tipoMonedas = [
     {
@@ -18,7 +18,7 @@ let tipoMonedas = [
 async function getMonedas() {
     //Obtengo todas las monedas segun arreglo y lleno el select
     try {
-        const res = await fetch('https://mindicador.cl/apix');
+        const res = await fetch('https://mindicador.cl/api');
         monedaJSON = await res.json();
         let select = document.getElementById("monedaTO");
         tipoMonedas.forEach((element) => {
