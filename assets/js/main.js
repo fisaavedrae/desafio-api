@@ -1,5 +1,5 @@
 import dataJson from './mindicador.json' assert { type: "json" }; // Importo el archivo jason local
-
+let monedaJSON = "";
 //Deje este arreglo para poder parametrizar la cantidad de monedas a mostrar en el select, el tipo de monedas a ingresar deben coincidir con la pagina mindicador.cl
 let tipoMonedas = [
     {
@@ -18,31 +18,31 @@ let tipoMonedas = [
 async function getMonedas() {
     //Obtengo todas las monedas segun arreglo y lleno el select
     try {
-        const res = await fetch('https://mindicador.cl/api');
-        const monedaJSON = await res.json();
+        const res = await fetch('https://mindicador.cl/apix');
+        monedaJSON = await res.json();
         let select = document.getElementById("monedaTO");
         tipoMonedas.forEach((element) => {
             let option = document.createElement("option");
             option.value = monedaJSON[element.tipo].valor;
-            option.text = element.descripcion;
+            option.text = monedaJSON[element.tipo].nombre;
             select.appendChild(option);
         });
     } catch (error) {
         console.log('Error fetch: ' + error.message);
         // arrojó error la lectura de la api, asi que uso el archivo local importado al inicio del archivo
         try {
+            monedaJSON = dataJson;
             let select = document.getElementById("monedaTO");
             tipoMonedas.forEach((element) => {
                 let option = document.createElement("option");
-                option.value = dataJson[element.tipo].valor;
-                option.text = element.descripcion;
+                option.value = monedaJSON[element.tipo].valor;
+                option.text = monedaJSON[element.tipo].nombre;
                 select.appendChild(option);
             });
         } catch (error) {
             console.log('Error local: ' + error.message);
         }
     }
-
 }
 function convertirMoneda() {
     let moneda = document.getElementById("monedaIN").value;
@@ -64,22 +64,28 @@ async function getMonedaMes() {
     let monedaDestino = document.getElementById("monedaTO");
     let labels = [];
     let valores = [];
-    let contador = 0;
-    let descMoneda = monedaDestino.options[monedaDestino.selectedIndex].text;
-    const url = "https://mindicador.cl/api/" + descMoneda.toLowerCase();
-    const res = await fetch(url);
-    const monedaJSON = await res.json();
-
-    monedaJSON.serie.forEach(element => {
-        contador++;
-        if (contador <= 10) {
-            const d = new Date(element.fecha);
-            labels.push(d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear()); //Cargo arreglo de fechas para ser usado en el grafico
-            valores.push(element.valor); //Cargo arreglo de valores para ser usado en el grafico
+    let tipoMoneda = tipoMonedas[monedaDestino.selectedIndex - 1].tipo;
+    let descMoneda = monedaJSON[tipoMoneda].nombre;
+    try {
+        const url = "https://mindicador.cl/api/" + tipoMoneda.toLowerCase();
+        const res = await fetch(url);
+        const monedaJSON = await res.json();
+        for (let i = 0; i < 10; i++) {
+            labels.push(getFormatoFecha(monedaJSON.serie[i].fecha)); //Cargo arreglo de fechas para ser usado en el grafico
+            valores.push(monedaJSON.serie[i].valor); //Cargo arreglo de valores para ser usado en el grafico
         }
-    });
-
+    } catch (error) {
+        console.log('Error local: ' + error.message);
+    }
     cargarChart(labels, valores, descMoneda); //Llamo a la funcion para cargar el grafico
+}
+function getFormatoFecha(fecha) {
+    const nuevaFecha = new Date(fecha);
+    const dia = nuevaFecha.getDate();
+    const mes = nuevaFecha.getMonth() + 1;
+    const año = nuevaFecha.getFullYear();
+
+    return `${dia}/${mes}/${año}`;
 }
 let myChart;
 function cargarChart(labels, valores, descMoneda) {
