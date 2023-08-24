@@ -36,7 +36,7 @@ let tipoMonedas = [
     }
 ];
 ```
-
+* las monedas a parametriza deben tener la propiedad "unidad_medida": "Pesos"
 
 
 [link repo](https://github.com/fisaavedrae/desafio-api)
