@@ -19,7 +19,7 @@ let tipoMonedas = [
 async function getMonedas() {
     //Obtengo todas las monedas segun arreglo y lleno el select
     try {
-        const res = await fetch('https://mindicador.cl/apix');
+        const res = await fetch('https://mindicador.cl/api');
         const monedaJSON = await res.json();
         let select = document.getElementById("monedaTO");
         tipoMonedas.forEach((element) => {
