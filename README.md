@@ -12,6 +12,7 @@ Para desarrollar estoy usando un macbook air con una resolución de 1440x900, si
 # Monedas
 Dejé un json al inicio del JS, para poder parametrizas las monedas a mostrar en el select, asi se pueden mostrar mas o menos de las 3 que dejé por defecto, por ejemplo:
 
+```json
 let tipoMonedas = [
     {
         tipo: "uf",
@@ -34,7 +35,7 @@ let tipoMonedas = [
         descripcion: "Unidad Tributaria Mensual (UTM)"
     }
 ];
-
+```
 
 
 
