@@ -15,7 +15,6 @@ let tipoMonedas = [
         descripcion: "Euro"
     }
 ];
-
 async function getMonedas() {
     //Obtengo todas las monedas segun arreglo y lleno el select
     try {
