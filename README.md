@@ -37,8 +37,8 @@ let tipoMonedas = [
 ];
 ```
 
-Las monedas a parametriza deben tener la propiedad 
-```bash
+Las monedas a parametriza deben tener la propiedad, en mindicador.cl 
+```javascript
 "unidad_medida": "Pesos"
 ```
 
